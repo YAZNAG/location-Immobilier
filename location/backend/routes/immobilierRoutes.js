@@ -3,17 +3,17 @@ const router = express.Router();
 const Immobilier = require('../models/immobilier');
 
 // Route pour récupérer tous les biens immobiliers
-router.get('/biens-immobiliers', async (req, res) => {
+router.get('/immobiliers', async (req, res) => {
     try {
-        const biensImmobiliers = await Immobilier.find();
-        res.json(biensImmobiliers);
+        const immobiliers = await Immobilier.find();
+        res.json(immobiliers);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
 
 // Route pour créer un nouveau bien immobilier
-router.post('/biens-immobiliers', async (req, res) => {
+router.post('/immobiliers', async (req, res) => {
     const immobilier = new Immobilier({
         adresse: req.body.adresse,
         type: req.body.type,
@@ -21,15 +21,15 @@ router.post('/biens-immobiliers', async (req, res) => {
     });
 
     try {
-        const nouveauBienImmobilier = await immobilier.save();
-        res.status(201).json(nouveauBienImmobilier);
+        const nouveauImmobilier = await immobilier.save();
+        res.status(201).json(nouveauImmobilier);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
 });
 
 // Autres routes pour mettre à jour, supprimer un bien immobilier, etc.
-// router.put('/biens-immobiliers/:id', ...);
-// router.delete('/biens-immobiliers/:id', ...);
+// router.put('/immobiliers/:id', ...);
+// router.delete('/immobiliers/:id', ...);
 
 module.exports = router;

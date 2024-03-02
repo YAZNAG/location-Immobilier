@@ -1,72 +1,63 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// src/pages/Locataires.js
+import React from 'react';
 
-const ContratsLocation = () => {
-  const [selectedType, setSelectedType] = useState('Appartement');
-  const [properties, setProperties] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await axios.get(`https://votre-api.com/biens_immobiliers?type=${selectedType}`);
-        setProperties(result.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, [selectedType]);
-
-  return (
-    <div className="container">
-      <aside>
-        <div className="sidebar">
-          {/* Vos liens de navigation ici */}
-        </div>
-      </aside>
-      <div className="row">
-        <div className="row select-type">
-          <div className="columns medium-1 small-12">
-            <span className="select-type-back"></span>
-            <span className="desc">Type de bien</span>
-          </div>
-          <div className="columns medium-12 small-12 assetType">
-            <div className="picto-type picto-appartement" onClick={() => setSelectedType('Appartement')}>
-              <span className="picto"></span>
-              <span className="text" data-type="appartment">Appartement</span>
+function contrats_location() {
+    return (
+        <div className="container">
+        <aside>
+            <div className="sidebar">
+                <a href="/" >
+                    <span className="material-icons-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="/Prpriétaires">
+                    <span className="material-icons-sharp">people</span>
+                    <h3>Proriétaires</h3>
+                </a>
+                <a href="/biens_immobiliers">
+                    <span className="material-icons-sharp">home</span>
+                    <h3>Biens Immobiliers</h3>
+                </a>
+                <a href="/locataires"  >
+                    <span className="material-icons-sharp">person_add</span>
+                    <h3>Locataires</h3>
+                </a>
+                <a href="/contrats_location" className="active">
+                    <span className="material-icons-sharp">inventory</span>
+                    <h3>Contrats De Location</h3>
+                </a>
+                <a href="/factures" >
+                    <span className="material-icons-sharp">receipt_long</span>
+                    <h3>Factures</h3>
+                </a>
+                <a href="/payement">
+                    <span className="material-icons-sharp">credit_card</span>
+                    <h3>Payement</h3>
+                </a>
+                <a href="/avis_depart">
+                    <span className="material-icons-sharp">cancel</span>
+                    <h3>Avis De Départ</h3>
+                </a>
+                <a href="/settings">
+                    <span className="material-icons-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+                <a href="/rapports">
+                    <span className="material-icons-sharp">account_tree</span>
+                    <h3>Rapports</h3>
+                </a>
+                <a href="/Logout" onClick={(e) => { e.preventDefault(); document.getElementById('logout-form').submit(); }}>
+                    <span className="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+                <form id="logout-form" action="" method="POST" style={{ display: 'none' }}>
+                    {/* Remplacez @csrf par la valeur appropriée ou une chaîne statique */}
+                    {/* @csrf */}
+                </form>
             </div>
-            {/* Autres types de biens immobiliers */}
-          </div>
-        </div>
-        <div className="select-type-bottom">
-          {/* Options supplémentaires ici */}
-        </div>
-        <div>
-          <h2>Biens immobiliers de type {selectedType}</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Adresse</th>
-                <th>Ville</th>
-                <th>Superficie</th>
-                {/* Ajoutez d'autres colonnes en fonction de vos données */}
-              </tr>
-            </thead>
-            <tbody>
-              {properties.map(property => (
-                <tr key={property._id}>
-                  <td>{property.bien_immobilier.adresse}</td>
-                  <td>{property.bien_immobilier.ville}</td>
-                  <td>{property.bien_immobilier.superficie}</td>
-                  {/* Ajoutez d'autres cellules en fonction de vos données */}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+        </aside>
     </div>
-  );
-};
+    );
+}
 
-export default ContratsLocation;
+export default contrats_location;

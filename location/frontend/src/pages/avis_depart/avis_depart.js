@@ -1,26 +1,12 @@
-import React, { useState } from 'react';
-import './payement.css';
-const PropertyForm = () => {
-  const [step, setStep] = useState(1);
+// src/pages/Locataires.js
+import React from 'react';
 
-  const nextStep = () => {
-    setStep(step + 1);
-  };
-
-  const prevStep = () => {
-    setStep(step - 1);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Logique de soumission du formulaire
-  };
-
-  return (
-    <div className="container">
-      <aside>
+function avis_depart() {
+    return (
+        <div className="container">
+        <aside>
             <div className="sidebar">
-                <a href="/"  >
+                <a href="/" >
                     <span className="material-icons-sharp">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
@@ -40,19 +26,19 @@ const PropertyForm = () => {
                     <span className="material-icons-sharp">inventory</span>
                     <h3>Contrats De Location</h3>
                 </a>
-                <a href="/factures">
+                <a href="factures">
                     <span className="material-icons-sharp">receipt_long</span>
                     <h3>Factures</h3>
                 </a>
-                <a href="/payement" className="active">
+                <a href="/payement">
                     <span className="material-icons-sharp">credit_card</span>
                     <h3>Payement</h3>
                 </a>
-                <a href="/avis_depart">
+                <a href="/avis_depart" className="active">
                     <span className="material-icons-sharp">cancel</span>
                     <h3>Avis De Départ</h3>
                 </a>
-                <a href="/settings" >
+                <a href="/settings">
                     <span className="material-icons-sharp">settings</span>
                     <h3>Settings</h3>
                 </a>
@@ -69,13 +55,9 @@ const PropertyForm = () => {
                     {/* @csrf */}
                 </form>
             </div>
-       </aside>
-      
+        </aside>
+    </div>
+    );
+}
 
-      </div>
-      
-   
-  );
-};
-
-export default PropertyForm;
+export default avis_depart;

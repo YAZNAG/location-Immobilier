@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const proprietaireRoutes = require('./routes/proprietaireRoutes');
-const immobilierRoutes = require('./routes/immobilierRoutes');
+const immobilierRoutes = require('./routes/immobilierRoutes'); // Importer les routes d'immobilier
 const locataireRoutes = require('./routes/locataireRoutes'); 
 const cors = require('cors');
 
@@ -13,7 +13,7 @@ app.use(cors());
 
 // Routes API
 app.use('/api', proprietaireRoutes); // Routes pour les propriétaires
-app.use('/api', immobilierRoutes); // Routes pour les biens immobiliers
+app.use('/api', immobilierRoutes); // Utiliser les routes d'immobilier
 app.use('/api', locataireRoutes); // Routes pour les locataires
 
 // Connecter à MongoDB
