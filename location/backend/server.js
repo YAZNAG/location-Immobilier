@@ -1,8 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const proprietaireRoutes = require('./routes/proprietaireRoutes');
-const immobilierRoutes = require('./routes/immobilierRoutes'); // Importer les routes d'immobilier
-const locataireRoutes = require('./routes/locataireRoutes'); 
+const immobilierRoutes = require('./routes/immobilierRoutes');
+const locataireRoutes = require('./routes/locataireRoutes');
 const cors = require('cors');
 
 const app = express();

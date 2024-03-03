@@ -1,0 +1,184 @@
+/* Example CSS for the multi-step form */
+.multi-step-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 80%; /* Largeur du formulaire */
+  margin: auto; /* Centrage horizontal */
+  background-color: #bd9292; /* Couleur de fond du formulaire */
+  padding: 20px; /* Espacement intérieur */
+  border-radius: 10px; /* Coins arrondis */
+}
+
+.step-titles {
+  width: 30%;
+}
+
+.render-step {
+  width: 65%;
+}
+
+.step-titles {
+  width: 30%;
+}
+
+.step-title {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff; /* Couleur de fond par défaut */
+  color: #fff; /* Couleur du texte par défaut */
+}
+
+.step-title.active {
+  background-color: #0056b3; /* Couleur de fond active */
+}
+
+.step-number {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.step-text {
+  font-weight: bold;
+}
+/* Styles pour les tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Styles pour les champs de saisie */
+input[type="text"], input[type="number"], select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Styles pour les boutons */
+button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Styles pour les titres */
+h2, h3 {
+  color: #007bff;
+}
+
+/* Styles pour les messages */
+.error-message {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.success-message {
+  color: #28a745;
+  font-weight: bold;
+}
+/* Styles pour les champs de saisie */
+.input-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* Styles pour les labels */
+.label {
+  font-weight: bold;
+}
+
+/* Styles pour les champs de saisie */
+input[type="text"], input[type="number"], select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Styles pour les boutons */
+button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+/* Styles pour le formulaire */
+.step1-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Styles pour le titre */
+.step1-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Styles pour les champs de saisie */
+.step1-input {
+  width: 300px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Styles pour le bouton */
+.step1-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.step1-button:hover {
+  background-color: #0056b3;
+}
+
+/* Styles pour les messages d'erreur */
+.step1-error {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Styles pour le lien */
+.step1-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.step1-link:hover {
+  text-decoration: underline;
+}

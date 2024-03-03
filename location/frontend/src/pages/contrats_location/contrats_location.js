@@ -1,63 +1,83 @@
-// src/pages/Locataires.js
-import React from 'react';
+import React, { useState } from 'react';
 
-function contrats_location() {
+
+const MultiStepForm = () => {
+    const [step, setStep] = useState(1);
+    const [formData, setFormData] = useState({
+        nom: '',
+        adresse: '',
+        description: '',
+        type: '',
+        taille: '',
+        prixLocation: '',
+        disponibilite: true,
+        charges: [],
+        equipements: [],
+        paiements: [],
+        fraisRetard: [],
+        chargesPubliques: []
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Envoyer les données du formulaire
+        console.log(formData);
+    };
+
+    const nextStep = () => {
+        setStep(step + 1);
+    };
+
+    const prevStep = () => {
+        setStep(step - 1);
+    };
+
+    const renderStep = () => {
+        switch (step) {
+            case 1:
+                return (
+                    <div>
+                        <h2>Étape 1: Informations générales</h2>
+                        <input type="text" name="nom" value={formData.nom} onChange={handleChange} placeholder="Nom" />
+                        {/* Ajoutez les autres champs pour l'étape 1 */}
+                        <button onClick={nextStep}>Suivant</button>
+                    </div>
+                );
+            case 2:
+                return (
+                    <div>
+                        <h2>Étape 2: Détails supplémentaires</h2>
+                        <input type="text" name="adresse" value={formData.adresse} onChange={handleChange} placeholder="Adresse" />
+                        {/* Ajoutez les autres champs pour l'étape 2 */}
+                        <button onClick={prevStep}>Précédent</button>
+                        <button onClick={nextStep}>Suivant</button>
+                    </div>
+                );
+            case 3:
+                return (
+                    <div>
+                        <h2>Étape 3: Confirmation</h2>
+                        <p>Vérifiez les détails et soumettez le formulaire :</p>
+                        {/* Affichez un résumé des informations saisies */}
+                        <button onClick={prevStep}>Précédent</button>
+                        <button onClick={handleSubmit}>Soumettre</button>
+                    </div>
+                );
+            default:
+                return null;
+        }
+    };
+
     return (
-        <div className="container">
-        <aside>
-            <div className="sidebar">
-                <a href="/" >
-                    <span className="material-icons-sharp">grid_view</span>
-                    <h3>Dashboard</h3>
-                </a>
-                <a href="/Prpriétaires">
-                    <span className="material-icons-sharp">people</span>
-                    <h3>Proriétaires</h3>
-                </a>
-                <a href="/biens_immobiliers">
-                    <span className="material-icons-sharp">home</span>
-                    <h3>Biens Immobiliers</h3>
-                </a>
-                <a href="/locataires"  >
-                    <span className="material-icons-sharp">person_add</span>
-                    <h3>Locataires</h3>
-                </a>
-                <a href="/contrats_location" className="active">
-                    <span className="material-icons-sharp">inventory</span>
-                    <h3>Contrats De Location</h3>
-                </a>
-                <a href="/factures" >
-                    <span className="material-icons-sharp">receipt_long</span>
-                    <h3>Factures</h3>
-                </a>
-                <a href="/payement">
-                    <span className="material-icons-sharp">credit_card</span>
-                    <h3>Payement</h3>
-                </a>
-                <a href="/avis_depart">
-                    <span className="material-icons-sharp">cancel</span>
-                    <h3>Avis De Départ</h3>
-                </a>
-                <a href="/settings">
-                    <span className="material-icons-sharp">settings</span>
-                    <h3>Settings</h3>
-                </a>
-                <a href="/rapports">
-                    <span className="material-icons-sharp">account_tree</span>
-                    <h3>Rapports</h3>
-                </a>
-                <a href="/Logout" onClick={(e) => { e.preventDefault(); document.getElementById('logout-form').submit(); }}>
-                    <span className="material-icons-sharp">logout</span>
-                    <h3>Logout</h3>
-                </a>
-                <form id="logout-form" action="" method="POST" style={{ display: 'none' }}>
-                    {/* Remplacez @csrf par la valeur appropriée ou une chaîne statique */}
-                    {/* @csrf */}
-                </form>
-            </div>
-        </aside>
-    </div>
+        <div className="multistep-form">
+            {renderStep()}
+        </div>
     );
-}
+};
 
-export default contrats_location;
+export default MultiStepForm;

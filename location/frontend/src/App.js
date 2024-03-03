@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Prpriétaires from './pages/Prpriétaires/Prpriétaires';
 import BiensImmobiliers from './pages/biens_immobiliers/biens_immobiliers';
+import AddImmobiliers from './pages/biens_immobiliers/Add-immobilier';
+
 import Locataires from './pages/Locataires/Locataires';
 import ContratsLocation from './pages/contrats_location/contrats_location'
 import Factures from './pages/factures/factures';
@@ -26,7 +28,9 @@ function App() {
                 <Route path="/factures" element={<Factures />} />
                 <Route path="/avis_depart" element={<AvisDepart />} />  
                 <Route path="/settings" element={<Settings />} /> 
-                <Route path="/rapports" element={<Rapports />} />  
+                <Route path="/rapports" element={<Rapports />} />
+                <Route path="/AddImmobiliers" element={<AddImmobiliers />} />
+               
                 
             </Routes>
         </Router>

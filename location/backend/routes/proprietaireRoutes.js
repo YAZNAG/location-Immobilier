@@ -14,12 +14,13 @@ router.get('/proprietaires', async (req, res) => {
 
 // Route pour créer un nouveau propriétaire
 router.post('/proprietaires', async (req, res) => {
+    const { nom, prenom, email, telephone, cin } = req.body;
     const proprietaire = new Proprietaire({
-        nom: req.body.nom,
-        prenom: req.body.prenom,
-        email: req.body.email,
-        telephone: req.body.telephone,
-        cin: req.body.cin
+        nom,
+        prenom,
+        email,
+        telephone,
+        cin
     });
 
     try {
@@ -30,8 +31,21 @@ router.post('/proprietaires', async (req, res) => {
     }
 });
 
-// Autres routes pour mettre à jour, supprimer un propriétaire, etc.
-// router.put('/proprietaires/:id', ...);
-// router.delete('/proprietaires/:id', ...);
+// Route pour rechercher un propriétaire par cin
+// Route pour rechercher un propriétaire par cin
+router.post('/proprietaires/search', async (req, res) => {
+    const { cin } = req.body;
+    try {
+        const proprietaire = await Proprietaire.findOne({ cin });
+        if (proprietaire) {
+            res.json(proprietaire); // Return proprietor details
+        } else {
+            res.status(404).json({ message: 'Proprietaire not found' });
+        }
+    } catch (error) {
+        console.error('Error searching for proprietor:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 module.exports = router;

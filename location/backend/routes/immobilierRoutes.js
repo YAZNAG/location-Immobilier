@@ -1,3 +1,5 @@
+// immobilierRoutes.js
+
 const express = require('express');
 const router = express.Router();
 const Immobilier = require('../models/immobilier');
@@ -12,23 +14,8 @@ router.get('/immobiliers', async (req, res) => {
     }
 });
 
-// Route pour créer un nouveau bien immobilier
-router.post('/immobiliers', async (req, res) => {
-    const immobilier = new Immobilier({
-        adresse: req.body.adresse,
-        type: req.body.type,
-        proprietaire_id: req.body.proprietaire_id
-    });
-
-    try {
-        const nouveauImmobilier = await immobilier.save();
-        res.status(201).json(nouveauImmobilier);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
-
-// Autres routes pour mettre à jour, supprimer un bien immobilier, etc.
+// Autres routes pour créer, mettre à jour, supprimer un bien immobilier, etc.
+// router.post('/immobiliers', ...);
 // router.put('/immobiliers/:id', ...);
 // router.delete('/immobiliers/:id', ...);
 
