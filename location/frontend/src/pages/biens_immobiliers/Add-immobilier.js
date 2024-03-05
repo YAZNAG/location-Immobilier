@@ -8,7 +8,7 @@ import Step4 from './Step4';
 import Step5 from './Step5';
 import './css/style.css';
 
-const MultiStepForm = () => {
+const AddImmobiliers = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({});
 
@@ -108,4 +108,4 @@ const MultiStepForm = () => {
   );
 };
 
-export default MultiStepForm;
+export default AddImmobiliers;

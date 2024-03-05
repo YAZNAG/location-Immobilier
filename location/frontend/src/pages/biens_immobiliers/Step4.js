@@ -1,39 +1,64 @@
 import React, { useState } from 'react';
 
 const Step4 = ({ nextStep, prevStep, handleFormDataChange, formData }) => {
-  const [modePaiement, setModePaiement] = useState('');
-  const [frequencePaiement, setFrequencePaiement] = useState('');
-  const [montantPaiement, setMontantPaiement] = useState('');
+  const [montantPaiement, setMontantPaiement] = useState(formData.montantPaiement || '');
+  const [selectedBank, setSelectedBank] = useState(formData.selectedBank || '');
+  const [ribProprietaire, setRibProprietaire] = useState(formData.ribProprietaire || '');
+
+  const calculateTotalAmount = () => {
+    const prixLocation = parseFloat(formData.prixLocation) || 0;
+    const totalCharges = calculateTotalCharges();
+    const montantChargeInclus = prixLocation + totalCharges;
+    const montantTotal = montantChargeInclus + (montantChargeInclus * 0.05); // Ajouter 5% des charges
+    return montantTotal;
+  };
+
+  const calculateTotalCharges = () => {
+    let total = 0;
+    for (const charge in formData.extraCharges) {
+      total += parseFloat(formData.extraCharges[charge]) || 0;
+    }
+    return total;
+  };
 
   const handleNext = () => {
-    // Update formData state with the entered payment details
-    handleFormDataChange({ modePaiement, frequencePaiement, montantPaiement });
-    // Move to the next step
+    const totalAmount = calculateTotalAmount();
+    handleFormDataChange({ 
+      ...formData,
+      montantPaiement: montantPaiement,
+      selectedBank: selectedBank,
+      ribProprietaire: ribProprietaire,
+      totalAmount: totalAmount
+    });
     nextStep();
   };
 
   const handlePrevious = () => {
-    // Move to the previous step
     prevStep();
   };
 
   return (
     <div>
-      <h2>Step 4: Payment Details</h2>
+      <h2>Étape 4: Détails de paiement</h2>
       <div>
-        <label htmlFor="modePaiement">Payment Mode:</label>
-        <input type="text" id="modePaiement" value={modePaiement} onChange={(e) => setModePaiement(e.target.value)} />
+        <label htmlFor="selectedBank">Type de banque:</label>
+        <select value={selectedBank} onChange={(e) => setSelectedBank(e.target.value)}>
+          <option value="">Sélectionnez la banque</option>
+          <option value="CIH">CIH</option>
+          <option value="BMCE">BMCE</option>
+          <option value="BARID BANK">BARID BANK</option>
+          {/* Ajoutez d'autres options pour d'autres banques */}
+        </select>
       </div>
       <div>
-        <label htmlFor="frequencePaiement">Payment Frequency:</label>
-        <input type="text" id="frequencePaiement" value={frequencePaiement} onChange={(e) => setFrequencePaiement(e.target.value)} />
+        <label htmlFor="ribProprietaire">RIB du propriétaire (24 chiffres):</label>
+        <input type="text" id="ribProprietaire" value={ribProprietaire} onChange={(e) => setRibProprietaire(e.target.value)} />
       </div>
       <div>
-        <label htmlFor="montantPaiement">Payment Amount:</label>
-        <input type="number" id="montantPaiement" value={montantPaiement} onChange={(e) => setMontantPaiement(e.target.value)} />
+        <label>Montant total: {calculateTotalAmount()}</label>
       </div>
-      <button onClick={handlePrevious}>Previous</button>
-      <button onClick={handleNext}>Next</button>
+      <button onClick={handlePrevious}>Précédent</button>
+      <button onClick={handleNext}>Suivant</button>
     </div>
   );
 };

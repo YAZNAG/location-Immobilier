@@ -1,3 +1,4 @@
+// ImmobilierModel.js
 const mongoose = require('mongoose');
 
 const ImmobilierSchema = new mongoose.Schema({
@@ -34,22 +35,28 @@ const ImmobilierSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    // Nouveaux champs ajoutés pour prendre en charge les informations sur les frais supplémentaires et le mode de paiement
     extraCharges: [{
-        type: String
-    }],
-    paymentInfo: {
-        method: {
+        charge: {
             type: String,
             required: true
         },
-        amount: {
+        value: {
             type: Number,
             required: true
-        },
-        date: {
-            type: Date,
-            default: Date.now
         }
+    }],
+    selectedBank: {
+        type: String,
+        required: true
+    },
+    ribProprietaire: {
+        type: String,
+        required: true
+    },
+    totalAmount: {
+        type: Number,
+        required: true
     }
 });
 

@@ -21,9 +21,13 @@ const Step2 = ({ nextStep, prevStep, handleFormDataChange, formData }) => {
     prevStep();
   };
 
+  const handleTypeChange = (selectedType) => {
+    setType(selectedType);
+  };
+
   return (
     <div>
-      <h2>Étape 2: Saisir les informations sur la propriété</h2>
+      <h2>Saisir les informations sur la propriété</h2>
       <div>
         <label htmlFor="nom">Nom :</label>
         <input type="text" id="nom" value={nom} onChange={(e) => setNom(e.target.value)} />
@@ -38,7 +42,7 @@ const Step2 = ({ nextStep, prevStep, handleFormDataChange, formData }) => {
       </div>
       <div>
         <label htmlFor="type">Type :</label>
-        <select id="type" value={type} onChange={(e) => setType(e.target.value)}>
+        <select id="type" value={type} onChange={(e) => handleTypeChange(e.target.value)}>
           <option value="">-- Sélectionner le type --</option>
           <option value="Appartement">Appartement</option>
           <option value="Maison">Maison</option>

@@ -1,158 +1,349 @@
 import React, { useState } from 'react';
 
-const Step3 = ({ nextStep, prevStep, handleFormDataChange, formData, type }) => {
-  const [extraCharges, setExtraCharges] = useState([]);
-
-  const handleNext = () => {
-    handleFormDataChange({ extraCharges });
-    nextStep();
-  };
+const Step3 = ({ nextStep, prevStep, handleFormDataChange, formData }) => {
+  const [extraCharges, setExtraCharges] = useState({});
+  const [selectedPropertyType, setSelectedPropertyType] = useState('');
 
   const handlePrevious = () => {
     prevStep();
   };
 
-  const handleChargeChange = (charge) => {
-    if (extraCharges.includes(charge)) {
-      setExtraCharges(extraCharges.filter((item) => item !== charge));
-    } else {
-      setExtraCharges([...extraCharges, charge]);
-    }
+  const handlePropertyTypeChange = (propertyType) => {
+    setSelectedPropertyType(propertyType);
+    setExtraCharges({}); 
   };
 
-  const renderExtraCharges = () => {
-    switch (type) {
-      case 'Maison':
-        return (
-          <div>
-            <h3>House Charges</h3>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Lawn Care')}
-                onChange={() => handleChargeChange('Lawn Care')}
-              />
-              Lawn Care
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Homeowner Association Fees')}
-                onChange={() => handleChargeChange('Homeowner Association Fees')}
-              />
-              Homeowner Association Fees
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Property Maintenance')}
-                onChange={() => handleChargeChange('Property Maintenance')}
-              />
-              Property Maintenance
-            </label>
-          </div>
-        );
-      case 'Appartement':
-        return (
-          <div>
-            <h3>Apartment Charges</h3>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Condo Fees')}
-                onChange={() => handleChargeChange('Condo Fees')}
-              />
-              Condo Fees
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Property Tax')}
-                onChange={() => handleChargeChange('Property Tax')}
-              />
-              Property Tax
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Insurance')}
-                onChange={() => handleChargeChange('Insurance')}
-              />
-              Insurance
-            </label>
-          </div>
-        );
-      case 'Espace commercial':
-        return (
-          <div>
-            <h3>Commercial Space Charges</h3>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Commercial Property Tax')}
-                onChange={() => handleChargeChange('Commercial Property Tax')}
-              />
-              Commercial Property Tax
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Maintenance of Common Areas')}
-                onChange={() => handleChargeChange('Maintenance of Common Areas')}
-              />
-              Maintenance of Common Areas
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Security Services')}
-                onChange={() => handleChargeChange('Security Services')}
-              />
-              Security Services
-            </label>
-          </div>
-        );
-      case 'Terrain':
-        return (
-          <div>
-            <h3>Land Charges</h3>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Property Tax')}
-                onChange={() => handleChargeChange('Property Tax')}
-              />
-              Property Tax
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Landscaping')}
-                onChange={() => handleChargeChange('Landscaping')}
-              />
-              Landscaping
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={extraCharges.includes('Utilities')}
-                onChange={() => handleChargeChange('Utilities')}
-              />
-              Utilities
-            </label>
-          </div>
-        );
-      default:
-        return null;
+  const handleChargeChange = (charge, value) => {
+    const updatedCharges = { ...extraCharges, [charge]: parseFloat(value) || 0 };
+    setExtraCharges(updatedCharges);
+  };
+
+  const calculateTotalCharges = (charges) => {
+    let total = 0;
+    for (const charge in charges) {
+      total += charges[charge];
     }
+    return total;
+  };
+
+  const saveAndNext = () => {
+    // Mettre à jour l'état formData avec les charges supplémentaires
+    const updatedFormData = { 
+      ...formData,
+      extraCharges: extraCharges,
+      totalExtraCharges: calculateTotalCharges(extraCharges)
+    };
+    handleFormDataChange(updatedFormData);
+    // Passer à l'étape suivante
+    nextStep();
   };
 
   return (
     <div>
       <h2>Step 3: Additional Charges</h2>
-      {renderExtraCharges()}
+      <label>
+        Property Type:
+        <select value={selectedPropertyType} onChange={(e) => handlePropertyTypeChange(e.target.value)}>
+          <option value="">Select</option>
+          <option value="Maison">Maison</option>
+          <option value="Appartement">Appartement</option>
+          <option value="Espace commercial">Espace commercial</option>
+          <option value="Terrain">Terrain</option>
+          <option value="Stationnement">Stationnement</option>
+        </select>
+      </label>
+      {selectedPropertyType && (
+        <div>
+          {/* Affichage des charges supplémentaires en fonction du type de propriété sélectionné */}
+          {selectedPropertyType === 'Maison' && (
+    <div>
+        <h3>House Charges</h3>
+        
+        <label>
+            Electricity:
+            <input
+                type="text"
+                value={extraCharges['Electricity'] || ''}
+                onChange={(e) => handleChargeChange('Electricity', e.target.value)}
+            />
+        </label>
+        <label>
+            Water:
+            <input
+                type="text"
+                value={extraCharges['Water'] || ''}
+                onChange={(e) => handleChargeChange('Water', e.target.value)}
+            />
+        </label>
+        <label>
+            Property Tax:
+            <input
+                type="text"
+                value={extraCharges['Property Tax'] || ''}
+                onChange={(e) => handleChargeChange('Property Tax', e.target.value)}
+            />
+        </label>
+        <label>
+            Syndicate Fees:
+            <input
+                type="text"
+                value={extraCharges['Syndicate Fees'] || ''}
+                onChange={(e) => handleChargeChange('Syndicate Fees', e.target.value)}
+            />
+        </label>
+        <label>
+            Bank Credit:
+            <input
+                type="text"
+                value={extraCharges['Bank Credit'] || ''}
+                onChange={(e) => handleChargeChange('Bank Credit', e.target.value)}
+            />
+        </label>
+        <label>
+            Real Estate Agent:
+            <input
+                type="text"
+                value={extraCharges['Real Estate Agent'] || ''}
+                onChange={(e) => handleChargeChange('Real Estate Agent', e.target.value)}
+            />
+        </label>
+        <label>
+            Notary:
+            <input
+                type="text"
+                value={extraCharges['Notary'] || ''}
+                onChange={(e) => handleChargeChange('Notary', e.target.value)}
+            />
+        </label>
+        
+    </div>
+)}
+
+{selectedPropertyType === 'Appartement' && (
+    <div>
+        <h3>Appartement Charges</h3>
+        
+        <label>
+            Electricity:
+            <input
+                type="text"
+                value={extraCharges['Electricity'] || ''}
+                onChange={(e) => handleChargeChange('Electricity', e.target.value)}
+            />
+        </label>
+        <label>
+            Water:
+            <input
+                type="text"
+                value={extraCharges['Water'] || ''}
+                onChange={(e) => handleChargeChange('Water', e.target.value)}
+            />
+        </label>
+        <label>
+            Property Tax:
+            <input
+                type="text"
+                value={extraCharges['Property Tax'] || ''}
+                onChange={(e) => handleChargeChange('Property Tax', e.target.value)}
+            />
+        </label>
+        <label>
+            Syndicate Fees:
+            <input
+                type="text"
+                value={extraCharges['Syndicate Fees'] || ''}
+                onChange={(e) => handleChargeChange('Syndicate Fees', e.target.value)}
+            />
+        </label>
+        <label>
+            Bank Credit:
+            <input
+                type="text"
+                value={extraCharges['Bank Credit'] || ''}
+                onChange={(e) => handleChargeChange('Bank Credit', e.target.value)}
+            />
+        </label>
+        <label>
+            Real Estate Agent:
+            <input
+                type="text"
+                value={extraCharges['Real Estate Agent'] || ''}
+                onChange={(e) => handleChargeChange('Real Estate Agent', e.target.value)}
+            />
+        </label>
+        <label>
+            Notary:
+            <input
+                type="text"
+                value={extraCharges['Notary'] || ''}
+                onChange={(e) => handleChargeChange('Notary', e.target.value)}
+            />
+        </label>
+        {/* Ajoutez d'autres champs pour les frais de la maison */}
+    </div>
+)}
+ {selectedPropertyType === 'Espace commercial' && (
+    <div>
+        <h3>Espace commercial Charges</h3>
+        
+        <label>
+            Electricity:
+            <input
+                type="text"
+                value={extraCharges['Electricity'] || ''}
+                onChange={(e) => handleChargeChange('Electricity', e.target.value)}
+            />
+        </label>
+        <label>
+            Water:
+            <input
+                type="text"
+                value={extraCharges['Water'] || ''}
+                onChange={(e) => handleChargeChange('Water', e.target.value)}
+            />
+        </label>
+        <label>
+            Property Tax:
+            <input
+                type="text"
+                value={extraCharges['Property Tax'] || ''}
+                onChange={(e) => handleChargeChange('Property Tax', e.target.value)}
+            />
+        </label>
+        <label>
+            Syndicate Fees:
+            <input
+                type="text"
+                value={extraCharges['Syndicate Fees'] || ''}
+                onChange={(e) => handleChargeChange('Syndicate Fees', e.target.value)}
+            />
+        </label>
+        <label>
+            Bank Credit:
+            <input
+                type="text"
+                value={extraCharges['Bank Credit'] || ''}
+                onChange={(e) => handleChargeChange('Bank Credit', e.target.value)}
+            />
+        </label>
+        <label>
+            Real Estate Agent:
+            <input
+                type="text"
+                value={extraCharges['Real Estate Agent'] || ''}
+                onChange={(e) => handleChargeChange('Real Estate Agent', e.target.value)}
+            />
+        </label>
+        <label>
+            Notary:
+            <input
+                type="text"
+                value={extraCharges['Notary'] || ''}
+                onChange={(e) => handleChargeChange('Notary', e.target.value)}
+            />
+        </label>
+        
+    </div>
+)}
+ {selectedPropertyType === 'Terrain' && (
+    <div>
+        <h3>Terrain Charges</h3>
+        
+       
+        <label>
+            Property Tax:
+            <input
+                type="text"
+                value={extraCharges['Property Tax'] || ''}
+                onChange={(e) => handleChargeChange('Property Tax', e.target.value)}
+            />
+        </label>
+        <label>
+            Syndicate Fees:
+            <input
+                type="text"
+                value={extraCharges['Syndicate Fees'] || ''}
+                onChange={(e) => handleChargeChange('Syndicate Fees', e.target.value)}
+            />
+        </label>
+        <label>
+            Bank Credit:
+            <input
+                type="text"
+                value={extraCharges['Bank Credit'] || ''}
+                onChange={(e) => handleChargeChange('Bank Credit', e.target.value)}
+            />
+        </label>
+        <label>
+            Real Estate Agent:
+            <input
+                type="text"
+                value={extraCharges['Real Estate Agent'] || ''}
+                onChange={(e) => handleChargeChange('Real Estate Agent', e.target.value)}
+            />
+        </label>
+        <label>
+            Notary:
+            <input
+                type="text"
+                value={extraCharges['Notary'] || ''}
+                onChange={(e) => handleChargeChange('Notary', e.target.value)}
+            />
+        </label>
+       
+    </div>
+)}
+ {selectedPropertyType === 'Stationnement' && (
+    <div>
+        <h3>Stationnement Charges</h3>
+        <label>
+            Property Tax:
+            <input
+                type="text"
+                value={extraCharges['Property Tax'] || ''}
+                onChange={(e) => handleChargeChange('Property Tax', e.target.value)}
+            />
+        </label>
+        <label>
+            Syndicate Fees:
+            <input
+                type="text"
+                value={extraCharges['Syndicate Fees'] || ''}
+                onChange={(e) => handleChargeChange('Syndicate Fees', e.target.value)}
+            />
+        </label>
+        <label>
+            Bank Credit:
+            <input
+                type="text"
+                value={extraCharges['Bank Credit'] || ''}
+                onChange={(e) => handleChargeChange('Bank Credit', e.target.value)}
+            />
+        </label>
+        <label>
+            Real Estate Agent:
+            <input
+                type="text"
+                value={extraCharges['Real Estate Agent'] || ''}
+                onChange={(e) => handleChargeChange('Real Estate Agent', e.target.value)}
+            />
+        </label>
+        <label>
+            Notary:
+            <input
+                type="text"
+                value={extraCharges['Notary'] || ''}
+                onChange={(e) => handleChargeChange('Notary', e.target.value)}
+            />
+        </label>
+        {/* Ajoutez d'autres champs pour les frais de la maison */}
+    </div>
+)}
+        </div>
+      )}
+      <label>Total Charges: {calculateTotalCharges(extraCharges)}</label>
       <button onClick={handlePrevious}>Previous</button>
-      <button onClick={handleNext}>Next</button>
+      <button onClick={saveAndNext}>Next</button>
     </div>
   );
 };

@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Assurez-vous d'avoir axios installé dans votre projet
-import './biens_immobiliers.css'; // Importez votre fichier CSS contenant les styles
-
+import axios from 'axios';
+import './biens_immobiliers.css';
 
 const Immobil = () => {
-   
     const [titel, setTitel] = useState('');
     const [biensImmobiliers, setBiensImmobiliers] = useState([]);
-   
 
     const handleAppartementClick = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/biens-immobiliers?type=Appartement');
+            const response = await axios.get('http://localhost:5000/api/immobiliers?type=Appartement');
             setTitel('Appartements');
-            setBiensImmobiliers(response.data);
+            const appartements = response.data.filter(bien => bien.type === 'Appartement');
+            setBiensImmobiliers(appartements);
         } catch (error) {
             console.error('Erreur lors de la récupération des données:', error);
         }
@@ -21,9 +19,10 @@ const Immobil = () => {
 
     const handleMaisonClick = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/biens-immobiliers?type=Maison');
+            const response = await axios.get('http://localhost:5000/api/immobiliers?type=Maison');
             setTitel('Maisons');
-            setBiensImmobiliers(response.data);
+            const maisons = response.data.filter(bien => bien.type === 'Maison');
+            setBiensImmobiliers(maisons);
         } catch (error) {
             console.error('Erreur lors de la récupération des données:', error);
         }
@@ -31,9 +30,10 @@ const Immobil = () => {
 
     const handleTerrainClick = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/biens-immobiliers?type=Terrain');
+            const response = await axios.get('http://localhost:5000/api/immobiliers?type=Terrain');
             setTitel('Terrains');
-            setBiensImmobiliers(response.data);
+            const terrains = response.data.filter(bien => bien.type === 'Terrain');
+            setBiensImmobiliers(terrains);
         } catch (error) {
             console.error('Erreur lors de la récupération des données:', error);
         }
@@ -41,9 +41,10 @@ const Immobil = () => {
 
     const handleEspaceCommercialClick = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/biens-immobiliers?type=Espace Commercial');
+            const response = await axios.get('http://localhost:5000/api/immobiliers?type=Espace Commercial');
             setTitel('Espaces Commerciaux');
-            setBiensImmobiliers(response.data);
+            const espacesCommerciaux = response.data.filter(bien => bien.type === 'Espace Commercial');
+            setBiensImmobiliers(espacesCommerciaux);
         } catch (error) {
             console.error('Erreur lors de la récupération des données:', error);
         }
@@ -53,7 +54,8 @@ const Immobil = () => {
         try {
             const response = await axios.get('http://localhost:5000/api/immobiliers?type=Stationnement');
             setTitel('Stationnements');
-            setBiensImmobiliers(response.data);
+            const stationnements = response.data.filter(bien => bien.type === 'Stationnement');
+            setBiensImmobiliers(stationnements);
         } catch (error) {
             console.error('Erreur lors de la récupération des données:', error);
         }
@@ -122,7 +124,7 @@ const Immobil = () => {
                 </div>
                 <div className="card" onClick={handleMaisonClick}>
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2 22H22" stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M2.94995 22L2.99995 9.96999C2.99995 9.35999 3.28995 8.78004 3.76995 8.40004L10.77 2.95003C11.49 2.39003 12.4999 2.39003 13.2299 2.95003L20.23 8.39003C20.72 8.77003 21 9.34999 21 9.96999V22" stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"></path> <path d="M13 17H11C10.17 17 9.5 17.67 9.5 18.5V22H14.5V18.5C14.5 17.67 13.83 17 13 17Z" stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"></path> <path d="M9.5 13.75H7.5C6.95 13.75 6.5 13.3 6.5 12.75V11.25C6.5 10.7 6.95 10.25 7.5 10.25H9.5C10.05 10.25 10.5 10.7 10.5 11.25V12.75C10.5 13.3 10.05 13.75 9.5 13.75Z" stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"></path> <path d="M16.5 13.75H14.5C13.95 13.75 13.5 13.3 13.5 12.75V11.25C13.5 10.7 13.95 10.25 14.5 10.25H16.5C17.05 10.25 17.5 10.7 17.5 11.25V12.75C17.5 13.3 17.05 13.75 16.5 13.75Z" stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"></path> <path d="M19.0001 7L18.9701 4H14.5701" stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                    <span>Maisons</span>
+                    <span >Maisons</span>
                 </div>
                 <div className="card" onClick={handleTerrainClick}>
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2.5 5.7C2.5 4.57989 2.5 4.01984 2.71799 3.59202C2.90973 3.21569 3.21569 2.90973 3.59202 2.71799C4.01984 2.5 4.5799 2.5 5.7 2.5H18.3C19.4201 2.5 19.9802 2.5 20.408 2.71799C20.7843 2.90973 21.0903 3.21569 21.282 3.59202C21.5 4.01984 21.5 4.5799 21.5 5.7V18.3C21.5 19.4201 21.5 19.9802 21.282 20.408C21.0903 20.7843 20.7843 21.0903 20.408 21.282C19.9802 21.5 19.4201 21.5 18.3 21.5H5.7C4.57989 21.5 4.01984 21.5 3.59202 21.282C3.21569 21.0903 2.90973 20.7843 2.71799 20.408C2.5 19.9802 2.5 19.4201 2.5 18.3V5.7Z" stroke="#ffffff" stroke-linecap="round"></path> <path d="M12.5 15.0294C12.5 17.1878 10.3603 18.704 9.42687 19.2628C9.16233 19.4211 8.83767 19.4211 8.57313 19.2628C7.63974 18.704 5.5 17.1878 5.5 15.0294C5.5 12.9118 7.19587 11.5 9 11.5C10.8667 11.5 12.5 12.9118 12.5 15.0294Z" stroke="#ffffff"></path> <path d="M18.5 21.5L12.5 6.5" stroke="#ffffff"></path> <path d="M21.5 4.5L2.5 8.5" stroke="#ffffff"></path> <circle cx="9" cy="15" r="1" fill="#ffffff"></circle> </g></svg>
@@ -139,7 +141,10 @@ const Immobil = () => {
             </div>
             <div className="ajout_line">
                    <span className='type'>{titel}</span>
-                 <button onClick={"/AddImmobiliers"}>Ajouter</button>
+                   <a href="/AddImmobiliers" className="active">
+                    <span className="material-icons-sharp">Ajouter</span>
+                    <h3>Ajouter</h3>
+                   </a>
                 </div>
             <div className="table">
                 <h2>{titel}</h2>
@@ -158,7 +163,7 @@ const Immobil = () => {
             <tr key={index}>
                 <td>{bien.nom}</td>
                 <td>{bien.adresse}</td>
-                <td>{bien.prix_location}</td>
+                <td>{bien.prixLocation}</td>
                 <td>{bien.taille}</td>
             </tr>
         ))}

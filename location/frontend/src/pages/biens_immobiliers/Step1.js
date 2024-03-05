@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import "./css/style.css";
-const Step1 = ({ nextStep }) => {
+
+const Step1 = ({ nextStep, handleFormDataChange, formData }) => {
   const [cin, setCin] = useState('');
   const [prenom, setPrenom] = useState('');
   const [nom, setNom] = useState('');
@@ -24,6 +25,15 @@ const Step1 = ({ nextStep }) => {
         setNom(data.nom);
         setErrorMessage('');
         setSearched(true);
+
+        // Mise à jour des données dans formData
+        handleFormDataChange({ 
+          ...formData, 
+          prenomProprieter: data.prenom,
+          nomProprieter: data.nom,
+          CINProprieter: data.cin,
+          telephoneProprieter: data.telephone
+        });
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message);

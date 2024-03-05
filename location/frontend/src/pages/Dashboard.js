@@ -14,7 +14,7 @@ function Dashboard() {
                     <span className="material-icons-sharp">people</span>
                     <h3>Proriétaires</h3>
                 </a>
-                <a href="/biens_immobilier">
+                <a href="/biens_immobiliers">
                     <span className="material-icons-sharp">home</span>
                     <h3>Biens Immobiliers</h3>
                 </a>
